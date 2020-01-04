@@ -42,7 +42,7 @@ public:
 
     void hideLockedChannels(bool hide = true);
 
-    Gtk::ToggleButton *lockToggleButton, *muteToggleButton;
+    Gtk::ToggleButton *lockToggleButton, *muteToggleButton, *priorityToggleButton;
     Gtk::Label *directionLabel;
     Gtk::ComboBoxText *deviceComboBox;
 
@@ -53,6 +53,7 @@ public:
 
     virtual void onMuteToggleButton();
     virtual void onLockToggleButton();
+    virtual void onPriorityToggleButton();
     virtual bool onContextTriggerEvent(GdkEventButton*);
 
     sigc::connection timeoutConnection;

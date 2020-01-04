@@ -41,12 +41,14 @@ StreamWidget::StreamWidget(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Buil
 
     x->get_widget("streamLockToggleButton", lockToggleButton);
     x->get_widget("streamMuteToggleButton", muteToggleButton);
+    x->get_widget("streamPriorityToggleButton", priorityToggleButton);
     x->get_widget("directionLabel", directionLabel);
     x->get_widget("deviceComboBox", deviceComboBox);
 
     this->signal_button_press_event().connect(sigc::mem_fun(*this, &StreamWidget::onContextTriggerEvent));
     muteToggleButton->signal_clicked().connect(sigc::mem_fun(*this, &StreamWidget::onMuteToggleButton));
     lockToggleButton->signal_clicked().connect(sigc::mem_fun(*this, &StreamWidget::onLockToggleButton));
+    priorityToggleButton->signal_clicked().connect(sigc::mem_fun(*this, &StreamWidget::onPriorityToggleButton));
     deviceComboBox->signal_changed().connect(sigc::mem_fun(*this, &StreamWidget::onDeviceComboBoxChanged));
 
     terminate.set_label(_("Terminate"));
@@ -134,6 +136,12 @@ void StreamWidget::onMuteToggleButton() {
 
 void StreamWidget::onLockToggleButton() {
     hideLockedChannels(lockToggleButton->get_active());
+}
+void StreamWidget::onPriorityToggleButton() {
+    char* s = "unprioritized";
+    if(priorityToggleButton->get_active())
+        s += 2;
+    printf("Stream \"%s\" %s!\n", nameLabel->get_text(), s);
 }
 
 bool StreamWidget::timeoutEvent() {
